@@ -1,0 +1,13 @@
+[Unit]
+Description=seslog
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/seslog/
+ExecStart=/opt/seslog/seslog-server -logtostderr=true
+Restart=on-failure
+TimeoutStopSec=5
+KillMode=control-group
+
+[Install]
+WantedBy=multi-user.target

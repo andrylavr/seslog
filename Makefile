@@ -1,6 +1,6 @@
 GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD 2>/dev/null)
 GIT_COMMIT=$(shell git rev-parse --short HEAD)
-export GOPATH=${CURDIR}
+GOPATH=${CURDIR}
 LDFLAGS=-ldflags "-s -w -X main.GitBranch=${GIT_BRANCH} -X main.GitCommit=${GIT_COMMIT} -X main.BuildDate=`date -u +%Y-%m-%d.%H:%M:%S`"
 CGO_ENABLED=0
 
@@ -17,5 +17,9 @@ d:
 f:
 	gofmt -l -s -w `find . -type f -name '*.go' -not -path "./*/vendor/*"`
 	goimports -l -w `find . -type f -name '*.go' -not -path "./*/vendor/*"`
+
+deb: build
+	@nfpm pkg --target build/seslog-server.deb
+	@dpkg-deb -I build/seslog-server.deb
 
 .PHONY: build
