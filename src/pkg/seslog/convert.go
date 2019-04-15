@@ -2,13 +2,14 @@ package seslog
 
 import (
 	"errors"
-	"github.com/golang/glog"
-	"github.com/satyrius/gonx"
 	"net"
 	"net/url"
 	"reflect"
 	"strconv"
 	"time"
+
+	"github.com/golang/glog"
+	"github.com/satyrius/gonx"
 )
 
 const NginxTimeLayout = "02/Jan/2006:15:04:05 -0700"

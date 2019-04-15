@@ -1,13 +1,14 @@
 package seslog
 
 import (
+	"net"
+	"time"
+
 	"github.com/golang/glog"
 	"github.com/satyrius/gonx"
 	"github.com/ua-parser/uap-go/uaparser"
 	"gopkg.in/mcuadros/go-syslog.v2"
 	"gopkg.in/mcuadros/go-syslog.v2/format"
-	"net"
-	"time"
 )
 
 func getStringFromLogParts(logParts format.LogParts, key string) string {

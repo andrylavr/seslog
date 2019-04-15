@@ -2,11 +2,12 @@ package seslog
 
 import (
 	"database/sql"
-	"github.com/golang/glog"
-	"github.com/kshvakov/clickhouse"
 	"log"
 	"sync"
 	"time"
+
+	"github.com/golang/glog"
+	"github.com/kshvakov/clickhouse"
 )
 
 type CHWriter struct {
