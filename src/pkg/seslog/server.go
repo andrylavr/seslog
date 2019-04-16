@@ -70,10 +70,10 @@ func getEventContent(logParts format.LogParts) string {
 func (this *AccessLogServer) handleLogParts() {
 	for logParts := range this.channel {
 		access_log_event := AccessLogEvent{}
-		access_log_event.nginx_ip = getNginxIP(logParts)
-		access_log_event.nginx_event_time = getNginxEventTimestamp(logParts)
-		access_log_event.nginx_hostname = getNginxHostname(logParts)
-		access_log_event.nginx_tag = getNginxTag(logParts)
+		access_log_event.Nginx_ip = getNginxIP(logParts)
+		access_log_event.Nginx_event_time = getNginxEventTimestamp(logParts)
+		access_log_event.Nginx_hostname = getNginxHostname(logParts)
+		access_log_event.Nginx_tag = getNginxTag(logParts)
 
 		content := getEventContent(logParts)
 		entry, err := this.nginx_parser.ParseString(content)
@@ -132,7 +132,7 @@ func (this *AccessLogServer) RunServer() error {
 	}
 
 	go this.handleLogParts()
-	this.chwriter.startWatcher()
+	go this.chwriter.startWatcher()
 
 	this.syslogServer.Wait()
 

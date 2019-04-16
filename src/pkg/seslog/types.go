@@ -5,29 +5,30 @@ import (
 )
 
 type Options struct {
-	CHDSN   string
-	Address string
+	CHDSN         string
+	Address       string
+	FlushInterval string
 }
 
 type NginxEvent struct {
-	nginx_ip         string
-	nginx_ip_uint32  uint32
-	nginx_event_time time.Time
-	nginx_hostname   string
-	nginx_tag        string
+	Nginx_ip         string
+	Nginx_ip_uint32  uint32
+	Nginx_event_time time.Time
+	Nginx_hostname   string
+	Nginx_tag        string
 }
 
 type TimeZoneInfo struct {
-	zonename   string
-	zoneoffset int32
+	Zonename   string
+	Zoneoffset int32
 }
 
 type URLParsed struct {
-	scheme   string
-	domain   string
-	path     string
-	arg_keys []string
-	arg_vals [][]string
+	Scheme   string
+	Domain   string
+	Path     string
+	Arg_keys []string
+	Arg_vals [][]string
 }
 
 type ConnectionInfo struct {
@@ -44,16 +45,16 @@ type GeoipInfo struct {
 }
 
 type UserAgentInfo struct {
-	ua_family        string
-	ua_major         string
-	ua_minor         string
-	ua_patch         string
-	ua_os_family     string
-	ua_os_major      string
-	ua_os_minor      string
-	ua_os_patch      string
-	ua_os_patchminor string
-	ua_device_family string
+	Ua_family        string
+	Ua_major         string
+	Ua_minor         string
+	Ua_patch         string
+	Ua_os_family     string
+	Ua_os_major      string
+	Ua_os_minor      string
+	Ua_os_patch      string
+	Ua_os_patchminor string
+	Ua_device_family string
 }
 
 type UpstreamInfo struct {
@@ -69,8 +70,8 @@ type AccessLogEvent struct {
 	GeoipInfo
 	UpstreamInfo
 	UserAgentInfo
-	url_parsed     URLParsed
-	referer_parsed URLParsed
+	Url_parsed     URLParsed
+	Referer_parsed URLParsed
 
 	Body_bytes_sent          uint64    `field:"body_bytes_sent"`
 	Connections_active       uint16    `field:"connections_active"`
@@ -100,5 +101,7 @@ type AccessLogEvent struct {
 	Upstream_status          uint16    `field:"upstream_status"`
 	Uri                      string    `field:"uri"`
 
-	remote_addr_uint32 uint32
+	Remote_addr_uint32 uint32
 }
+
+type AccessLogEvents []AccessLogEvent

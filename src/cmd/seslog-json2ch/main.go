@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
 	"pkg/seslog"
 )
 
@@ -18,14 +17,12 @@ var (
 
 func init() {
 	flag.StringVar(&options.CHDSN, "dsn", "native://127.0.0.1:9000?compress=1", "ClickHouse DSN")
-	flag.StringVar(&options.Address, "addr", ":5514", "listen address")
-	flag.StringVar(&options.FlushInterval, "flush-interval", "60s", "Interval between ClickHouse flushes")
 }
 
 func main() {
 	flag.Usage = func() {
 		fmt.Println("NAME:")
-		fmt.Println("  Seslog - syslog server for storing nginx access_log in ClickHouse")
+		fmt.Println(" Seslog JSON2ClickHouse - push .json.gz files to ClickHouse")
 		fmt.Println("VERSION:")
 		fmt.Printf("  rev[%s] %s (%s UTC).\n", GitCommit, GitBranch, BuildDate)
 		fmt.Println("USAGE:")
@@ -33,11 +30,6 @@ func main() {
 	}
 	flag.Parse()
 
-	accessLogServer, err := seslog.NewAccessLogServer(options)
-	if err != nil {
-		log.Fatal(err)
-	}
-	if err := accessLogServer.RunServer(); err != nil {
-		log.Fatal(err)
-	}
+	chWriter := seslog.NewCHWriter(options)
+	chWriter.FromFilesToCH()
 }

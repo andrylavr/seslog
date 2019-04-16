@@ -125,13 +125,13 @@ func (this *AccessLogServer) parseURL(rawurl string, urlParsed *URLParsed) error
 	if err != nil {
 		return err
 	}
-	urlParsed.scheme = info.Scheme
-	urlParsed.domain = info.Host
-	urlParsed.path = info.Path
+	urlParsed.Scheme = info.Scheme
+	urlParsed.Domain = info.Host
+	urlParsed.Path = info.Path
 	query := info.Query()
 	for key, val := range query {
-		urlParsed.arg_keys = append(urlParsed.arg_keys, key)
-		urlParsed.arg_vals = append(urlParsed.arg_vals, val)
+		urlParsed.Arg_keys = append(urlParsed.Arg_keys, key)
+		urlParsed.Arg_vals = append(urlParsed.Arg_vals, val)
 	}
 	return nil
 }
@@ -139,31 +139,31 @@ func (this *AccessLogServer) parseURL(rawurl string, urlParsed *URLParsed) error
 func (this *AccessLogServer) parseUserAgent(uastring string, uainfo *UserAgentInfo) {
 	client := this.uaparser.Parse(uastring)
 
-	uainfo.ua_family = client.UserAgent.Family
-	uainfo.ua_major = client.UserAgent.Major
-	uainfo.ua_minor = client.UserAgent.Minor
-	uainfo.ua_patch = client.UserAgent.Patch
-	uainfo.ua_os_family = client.Os.Family
-	uainfo.ua_os_major = client.Os.Major
-	uainfo.ua_os_minor = client.Os.Minor
-	uainfo.ua_os_patch = client.Os.Patch
-	uainfo.ua_os_patchminor = client.Os.PatchMinor
-	uainfo.ua_device_family = client.Device.Family
+	uainfo.Ua_family = client.UserAgent.Family
+	uainfo.Ua_major = client.UserAgent.Major
+	uainfo.Ua_minor = client.UserAgent.Minor
+	uainfo.Ua_patch = client.UserAgent.Patch
+	uainfo.Ua_os_family = client.Os.Family
+	uainfo.Ua_os_major = client.Os.Major
+	uainfo.Ua_os_minor = client.Os.Minor
+	uainfo.Ua_os_patch = client.Os.Patch
+	uainfo.Ua_os_patchminor = client.Os.PatchMinor
+	uainfo.Ua_device_family = client.Device.Family
 }
 
 func (this *AccessLogServer) parseEventURL(output *AccessLogEvent) error {
-	url_parsed := &output.url_parsed
-	url_parsed.scheme = output.Scheme
-	url_parsed.domain = output.Http_host
+	url_parsed := &output.Url_parsed
+	url_parsed.Scheme = output.Scheme
+	url_parsed.Domain = output.Http_host
 	path, querystring := splitRequestURI(output.Request_uri)
-	url_parsed.path = path
+	url_parsed.Path = path
 	query, err := url.ParseQuery(querystring)
 	if err != nil {
 		return err
 	}
 	for key, val := range query {
-		url_parsed.arg_keys = append(url_parsed.arg_keys, key)
-		url_parsed.arg_vals = append(url_parsed.arg_vals, val)
+		url_parsed.Arg_keys = append(url_parsed.Arg_keys, key)
+		url_parsed.Arg_vals = append(url_parsed.Arg_vals, val)
 	}
 
 	return nil
@@ -189,15 +189,15 @@ func (this *AccessLogServer) fields2event(fields gonx.Fields, output *AccessLogE
 	}
 
 	zonename, zoneoffset := output.Time_local.Zone()
-	output.zonename = zonename
-	output.zoneoffset = int32(zoneoffset)
+	output.Zonename = zonename
+	output.Zoneoffset = int32(zoneoffset)
 
-	_ = this.parseURL(output.Http_referer, &output.referer_parsed)
+	_ = this.parseURL(output.Http_referer, &output.Referer_parsed)
 	if err := this.parseEventURL(output); err != nil {
 		glog.Warningln(err)
 	}
 	this.parseUserAgent(output.Http_user_agent, &output.UserAgentInfo)
 
-	output.nginx_ip_uint32 = IP2UInt32(net.ParseIP(output.nginx_ip))
-	output.remote_addr_uint32 = IP2UInt32(net.ParseIP(output.Remote_addr))
+	output.Nginx_ip_uint32 = IP2UInt32(net.ParseIP(output.Nginx_ip))
+	output.Remote_addr_uint32 = IP2UInt32(net.ParseIP(output.Remote_addr))
 }

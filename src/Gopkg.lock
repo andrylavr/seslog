@@ -18,7 +18,8 @@
   revision = "23def4e6c14b4da8ac2ed8007337bc5eb5007998"
 
 [[projects]]
-  digest = "1:18110843f1b123fd4368a5e441354a1a8f66f8823516e799c2610eead34f322d"
+  branch = "master"
+  digest = "1:bda9fd2537546dcd3afc269253945c52f07f72404f9d8ae1f4ac160d8963a083"
   name = "github.com/kshvakov/clickhouse"
   packages = [
     ".",
@@ -33,8 +34,7 @@
     "lib/writebuffer",
   ]
   pruneopts = "UT"
-  revision = "1d87030de2a38bbe8c05e1b13f5b2f27466fd5a8"
-  version = "v1.3.6"
+  revision = "e6e0ffadd2cc27288e19b21b043b36c0dc68793d"
 
 [[projects]]
   branch = "master"
