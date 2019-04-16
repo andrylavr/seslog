@@ -194,6 +194,8 @@ func (this *CHWriter) WriteEvents() {
 		}
 		err = tx.Commit()
 		notOk(err)
+		err = stmt.Close()
+		notOk(err)
 	}(events)
 
 }
