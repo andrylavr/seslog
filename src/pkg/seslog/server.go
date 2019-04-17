@@ -4,6 +4,8 @@ import (
 	"net"
 	"time"
 
+	"github.com/patrickmn/go-cache"
+
 	"github.com/golang/glog"
 	"github.com/satyrius/gonx"
 	"github.com/ua-parser/uap-go/uaparser"
@@ -96,6 +98,7 @@ type AccessLogServer struct {
 	channel      chan format.LogParts
 	nginx_parser *gonx.Parser
 	uaparser     *uaparser.Parser
+	uacache      *cache.Cache
 }
 
 const log_format = `$body_bytes_sent	$connections_active	$connections_reading	$connections_waiting	$connections_writing	$content_length	$geoip_country_code	$geoip_latitude	$geoip_longitude	$http_host	$http_referer	$http_user_agent	$http_x_forwarded_for	$remote_addr	$request_method	$request_time	$request_uri	$scheme	$status	$tcpinfo_rtt	$tcpinfo_rttvar	$time_local	$upstream_cache_status	$upstream_response_length	$upstream_response_time	$upstream_status	$uri`
@@ -114,6 +117,7 @@ func NewAccessLogServer(options Options) (*AccessLogServer, error) {
 		channel:      channel,
 		nginx_parser: gonx.NewParser(log_format),
 		uaparser:     uaparser_inst,
+		uacache:      cache.New(1*time.Hour, 2*time.Hour),
 	}
 
 	server.syslogServer.SetFormat(syslog.RFC3164)

@@ -6,12 +6,13 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"fmt"
-	"github.com/kshvakov/clickhouse/lib/data"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"sync"
 	"time"
+
+	"github.com/kshvakov/clickhouse/lib/data"
 
 	"github.com/golang/glog"
 	"github.com/kshvakov/clickhouse"

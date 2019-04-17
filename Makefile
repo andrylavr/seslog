@@ -25,4 +25,11 @@ deb: build
 	@nfpm pkg --target build/seslog-server.deb
 	@dpkg-deb -I build/seslog-server.deb
 
+zip: build
+	@[ -d build/seslog/resources ] || mkdir -p build/seslog/resources
+	@cp resources/regexes.yaml build/seslog/resources/regexes.yaml
+	@cp build/seslog-server build/seslog/seslog-server
+	cd build && rm -f seslog.zip
+	cd build && zip -r seslog.zip seslog
+
 .PHONY: build

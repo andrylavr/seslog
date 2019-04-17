@@ -37,6 +37,14 @@
   revision = "e6e0ffadd2cc27288e19b21b043b36c0dc68793d"
 
 [[projects]]
+  digest = "1:808cdddf087fb64baeae67b8dfaee2069034d9704923a3cb8bd96a995421a625"
+  name = "github.com/patrickmn/go-cache"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "a3647f8e31d79543b2d0f0ae2fe5c379d72cedc0"
+  version = "v2.1.0"
+
+[[projects]]
   branch = "master"
   digest = "1:ca43c37bbe532c869e2bba0319666dffedf401751bc1dc8ff083c62e18dfb142"
   name = "github.com/satyrius/gonx"
@@ -80,6 +88,8 @@
   input-imports = [
     "github.com/golang/glog",
     "github.com/kshvakov/clickhouse",
+    "github.com/kshvakov/clickhouse/lib/data",
+    "github.com/patrickmn/go-cache",
     "github.com/satyrius/gonx",
     "github.com/ua-parser/uap-go/uaparser",
     "gopkg.in/mcuadros/go-syslog.v2",

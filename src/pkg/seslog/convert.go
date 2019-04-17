@@ -8,6 +8,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/patrickmn/go-cache"
+
 	"github.com/golang/glog"
 	"github.com/satyrius/gonx"
 )
@@ -137,6 +139,11 @@ func (this *AccessLogServer) parseURL(rawurl string, urlParsed *URLParsed) error
 }
 
 func (this *AccessLogServer) parseUserAgent(uastring string, uainfo *UserAgentInfo) {
+	if x, found := this.uacache.Get(uastring); found {
+		uainfo = x.(*UserAgentInfo)
+		return
+	}
+
 	client := this.uaparser.Parse(uastring)
 
 	uainfo.Ua_family = client.UserAgent.Family
@@ -149,6 +156,8 @@ func (this *AccessLogServer) parseUserAgent(uastring string, uainfo *UserAgentIn
 	uainfo.Ua_os_patch = client.Os.Patch
 	uainfo.Ua_os_patchminor = client.Os.PatchMinor
 	uainfo.Ua_device_family = client.Device.Family
+
+	this.uacache.Set(uastring, uainfo, cache.DefaultExpiration)
 }
 
 func (this *AccessLogServer) parseEventURL(output *AccessLogEvent) error {

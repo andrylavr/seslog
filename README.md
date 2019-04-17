@@ -6,7 +6,7 @@ It collects nginx's access logs and write them to ClickHouse DB.
 ## Install
 Add new `log_format` to your nginx config (http section)
 ```
-log_format seslog_format '$body_bytes_sent	$connections_active	$connections_reading	$connections_waiting	$connections_writing	$content_length	$geoip_country_code	$geoip_latitude	$geoip_longitude	$http_host	$http_referer	$http_user_agent	$http_x_forwarded_for	$remote_addr	$request_method	$request_time	$request_uri	$scheme	$status	$tcpinfo_rtt	$tcpinfo_rttvar	$time_local	$upstream_cache_status	$upstream_response_length	$upstream_response_time	$upstream_status	$uri';
+log_format seslog_format '$body_bytes_sent\t$connections_active\t$connections_reading\t$connections_waiting\t$connections_writing\t$content_length\t$geoip_country_code\t$geoip_latitude\t$geoip_longitude\t$http_host\t$http_referer\t$http_user_agent\t$http_x_forwarded_for\t$remote_addr\t$request_method\t$request_time\t$request_uri\t$scheme\t$status\t$tcpinfo_rtt\t$tcpinfo_rttvar\t$time_local\t$upstream_cache_status\t$upstream_response_length\t$upstream_response_time\t$upstream_status\t$uri';
 ```
 
 Then add access_log (preferred section)  
