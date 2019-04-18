@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/golang/glog"
-	"github.com/satyrius/gonx"
 )
 
 const NginxTimeLayout = "02/Jan/2006:15:04:05 -0700"
@@ -175,7 +174,7 @@ func (this *AccessLogServer) parseEventURL(output *AccessLogEvent) error {
 	return nil
 }
 
-func (this *AccessLogServer) fields2event(fields gonx.Fields, output *AccessLogEvent) {
+func (this *AccessLogServer) fields2event(fields parsedLine, output *AccessLogEvent) {
 	elem := reflect.ValueOf(output).Elem()
 	for field_key, field_val := range fields {
 		fieldNum, ok := struct_map[field_key]

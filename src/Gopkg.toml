@@ -31,10 +31,6 @@
 
 [[constraint]]
   branch = "master"
-  name = "github.com/satyrius/gonx"
-
-[[constraint]]
-  branch = "master"
   name = "github.com/ua-parser/uap-go"
 
 [[constraint]]

@@ -46,14 +46,6 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:ca43c37bbe532c869e2bba0319666dffedf401751bc1dc8ff083c62e18dfb142"
-  name = "github.com/satyrius/gonx"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "d96bd26e3b2c9d8b84b4694d858bb70b5e904d63"
-
-[[projects]]
-  branch = "master"
   digest = "1:5953d6e587de25d45aeaeb0fbe8af592b89450f6e3d470ebf8dad31471915bd9"
   name = "github.com/ua-parser/uap-go"
   packages = ["uaparser"]
@@ -90,7 +82,6 @@
     "github.com/kshvakov/clickhouse",
     "github.com/kshvakov/clickhouse/lib/data",
     "github.com/patrickmn/go-cache",
-    "github.com/satyrius/gonx",
     "github.com/ua-parser/uap-go/uaparser",
     "gopkg.in/mcuadros/go-syslog.v2",
     "gopkg.in/mcuadros/go-syslog.v2/format",

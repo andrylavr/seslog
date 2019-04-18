@@ -6,7 +6,6 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/patrickmn/go-cache"
-	"github.com/satyrius/gonx"
 	"github.com/ua-parser/uap-go/uaparser"
 	"gopkg.in/mcuadros/go-syslog.v2"
 	"gopkg.in/mcuadros/go-syslog.v2/format"
@@ -77,13 +76,12 @@ func (this *AccessLogServer) handleLogParts() {
 		access_log_event.Nginx_tag = getNginxTag(logParts)
 
 		content := getEventContent(logParts)
-		entry, err := this.nginx_parser.ParseString(content)
+		fields, err := this.nginx_parser.parseString(content)
 		if err != nil {
-			glog.Warningf("ParseString fail: %s", err)
+			glog.Warningf("parseString fail: %s", err)
 			continue
 		}
 
-		fields := entry.Fields()
 		this.fields2event(fields, &access_log_event)
 		this.chwriter.AddEvent(access_log_event)
 	}
@@ -95,7 +93,7 @@ type AccessLogServer struct {
 	handler      *syslog.ChannelHandler
 	chwriter     *CHWriter
 	channel      chan format.LogParts
-	nginx_parser *gonx.Parser
+	nginx_parser *NginxLogParser
 	uaparser     *uaparser.Parser
 	uacache      *cache.Cache
 }
@@ -114,7 +112,7 @@ func NewAccessLogServer(options Options) (*AccessLogServer, error) {
 		handler:      syslog.NewChannelHandler(channel),
 		chwriter:     NewCHWriter(options),
 		channel:      channel,
-		nginx_parser: gonx.NewParser(log_format),
+		nginx_parser: NewNginxLogParser(log_format),
 		uaparser:     uaparser_inst,
 		uacache:      cache.New(1*time.Hour, 2*time.Hour),
 	}
