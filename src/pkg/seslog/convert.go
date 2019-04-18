@@ -8,8 +8,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/patrickmn/go-cache"
-
 	"github.com/golang/glog"
 	"github.com/satyrius/gonx"
 )
@@ -39,12 +37,10 @@ var typemap = map[string]VarType{
 	"connections_waiting":      Uint16,
 	"connections_writing":      Uint16,
 	"content_length":           Uint64,
-	"geoip_country_code":       String,
-	"geoip_latitude":           Float64,
-	"geoip_longitude":          Float64,
 	"host":                     String,
 	"http_host":                String,
 	"http_referer":             String,
+	"sent_http_location":       String,
 	"http_user_agent":          String,
 	"http_x_forwarded_for":     String,
 	"remote_addr":              String,
@@ -140,7 +136,8 @@ func (this *AccessLogServer) parseURL(rawurl string, urlParsed *URLParsed) error
 
 func (this *AccessLogServer) parseUserAgent(uastring string, uainfo *UserAgentInfo) {
 	if x, found := this.uacache.Get(uastring); found {
-		uainfo = x.(*UserAgentInfo)
+		p := x.(*UserAgentInfo)
+		*uainfo = *p
 		return
 	}
 
@@ -157,7 +154,7 @@ func (this *AccessLogServer) parseUserAgent(uastring string, uainfo *UserAgentIn
 	uainfo.Ua_os_patchminor = client.Os.PatchMinor
 	uainfo.Ua_device_family = client.Device.Family
 
-	this.uacache.Set(uastring, uainfo, cache.DefaultExpiration)
+	this.uacache.Set(uastring, uainfo, 5*time.Minute)
 }
 
 func (this *AccessLogServer) parseEventURL(output *AccessLogEvent) error {
@@ -202,6 +199,7 @@ func (this *AccessLogServer) fields2event(fields gonx.Fields, output *AccessLogE
 	output.Zoneoffset = int32(zoneoffset)
 
 	_ = this.parseURL(output.Http_referer, &output.Referer_parsed)
+	_ = this.parseURL(output.Http_location, &output.Location_parsed)
 	if err := this.parseEventURL(output); err != nil {
 		glog.Warningln(err)
 	}

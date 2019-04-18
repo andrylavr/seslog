@@ -34,10 +34,6 @@ const INSERT_SQL = "INSERT INTO seslog.access_log (" +
 	"connections_writing, " +
 	"content_length, " +
 
-	"geoip_country_code, " +
-	"geoip_latitude, " +
-	"geoip_longitude, " +
-
 	"http_scheme, " +
 	"http_domain," +
 	"http_path," +
@@ -49,6 +45,12 @@ const INSERT_SQL = "INSERT INTO seslog.access_log (" +
 	"http_referer_path," +
 	"http_referer_arg_keys," +
 	"http_referer_arg_vals," +
+
+	"http_location_scheme, " +
+	"http_location_domain," +
+	"http_location_path," +
+	"http_location_arg_keys," +
+	"http_location_arg_vals," +
 
 	"ua_family," +
 	"ua_major," +
@@ -309,10 +311,6 @@ func (this *CHWriter) makeEventsTx(events AccessLogEvents) error {
 			event.Connections_writing,
 			event.Content_length,
 
-			event.Geoip_country_code,
-			event.Geoip_latitude,
-			event.Geoip_longitude,
-
 			event.Url_parsed.Scheme,
 			event.Url_parsed.Domain,
 			event.Url_parsed.Path,
@@ -324,6 +322,12 @@ func (this *CHWriter) makeEventsTx(events AccessLogEvents) error {
 			event.Referer_parsed.Path,
 			clickhouse.Array(event.Referer_parsed.Arg_keys),
 			clickhouse.Array(clickhouse.Array(event.Referer_parsed.Arg_vals)),
+
+			event.Location_parsed.Scheme,
+			event.Location_parsed.Domain,
+			event.Location_parsed.Path,
+			clickhouse.Array(event.Location_parsed.Arg_keys),
+			clickhouse.Array(clickhouse.Array(event.Location_parsed.Arg_vals)),
 
 			event.Ua_family,
 			event.Ua_major,

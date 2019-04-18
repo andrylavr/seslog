@@ -17,10 +17,6 @@ CREATE TABLE IF NOT EXISTS seslog.access_log(
 	connections_writing UInt16,
 	content_length UInt64,
 
-	geoip_country_code FixedString(2),
-	geoip_latitude Float64,
-	geoip_longitude Float64,
-
 	http_scheme String,
   http_domain String,
   http_path String,
@@ -32,6 +28,12 @@ CREATE TABLE IF NOT EXISTS seslog.access_log(
   http_referer_path String,
   http_referer_arg_keys Array(String),
   http_referer_arg_vals Array(Array(String)),
+
+  http_location_scheme String,
+  http_location_domain String,
+  http_location_path String,
+  http_location_arg_keys Array(String),
+  http_location_arg_vals Array(Array(String)),
 
   ua_family String,
   ua_major String,

@@ -38,12 +38,6 @@ type ConnectionInfo struct {
 	Connections_writing uint16 `field:"connections_writing"`
 }
 
-type GeoipInfo struct {
-	Geoip_country_code string  `field:"geoip_country_code"`
-	Geoip_latitude     float64 `field:"geoip_latitude"`
-	Geoip_longitude    float64 `field:"geoip_longitude"`
-}
-
 type UserAgentInfo struct {
 	Ua_family        string
 	Ua_major         string
@@ -67,11 +61,11 @@ type AccessLogEvent struct {
 	NginxEvent
 	TimeZoneInfo
 	ConnectionInfo
-	GeoipInfo
 	UpstreamInfo
 	UserAgentInfo
-	Url_parsed     URLParsed
-	Referer_parsed URLParsed
+	Url_parsed      URLParsed
+	Referer_parsed  URLParsed
+	Location_parsed URLParsed
 
 	Body_bytes_sent          uint64    `field:"body_bytes_sent"`
 	Connections_active       uint16    `field:"connections_active"`
@@ -79,11 +73,9 @@ type AccessLogEvent struct {
 	Connections_waiting      uint16    `field:"connections_waiting"`
 	Connections_writing      uint16    `field:"connections_writing"`
 	Content_length           uint64    `field:"content_length"`
-	Geoip_country_code       string    `field:"geoip_country_code"`
-	Geoip_latitude           float64   `field:"geoip_latitude"`
-	Geoip_longitude          float64   `field:"geoip_longitude"`
 	Http_host                string    `field:"http_host"`
 	Http_referer             string    `field:"http_referer"`
+	Http_location            string    `field:"sent_http_location"`
 	Http_user_agent          string    `field:"http_user_agent"`
 	Http_x_forwarded_for     string    `field:"http_x_forwarded_for"`
 	Remote_addr              string    `field:"remote_addr"`
