@@ -28,3 +28,16 @@ map $request_uri $sesloggable {
     ~*\.(ico|css|js|gif|jpg|jpeg|png|svg|woff|ttf|eot)$ 0;
 }
 ```
+
+## Usage
+Select TOP-30 Referrer Domains
+```clickhouse
+SELECT
+    http_referer_domain,
+    count() AS cnt
+FROM access_log 
+WHERE nginx_event_date = today()
+GROUP BY http_referer_domain
+ORDER BY cnt DESC
+LIMIT 30
+```

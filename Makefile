@@ -29,6 +29,7 @@ zip: build
 	@[ -d build/seslog/resources ] || mkdir -p build/seslog/resources
 	@cp resources/regexes.yaml build/seslog/resources/regexes.yaml
 	@cp build/seslog-server build/seslog/seslog-server
+	@cp -r package/systemd build/seslog
 	cd build && rm -f seslog.zip
 	cd build && zip -r seslog.zip seslog
 
