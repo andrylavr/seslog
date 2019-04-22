@@ -33,4 +33,13 @@ zip: build
 	cd build && rm -f seslog.zip
 	cd build && zip -r seslog.zip seslog
 
+install:
+	@mkdir -p /opt/seslog/resources
+	cp build/seslog-server /opt/seslog/seslog-server
+	cp resources/regexes.yaml /opt/seslog/resources/regexes.yaml
+	cp package/systemd/seslog-server.service /etc/systemd/system/seslog-server.service
+	/bin/systemctl daemon-reload
+	/bin/systemctl enable seslog-server
+	service seslog-server status
+
 .PHONY: build

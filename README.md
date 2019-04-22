@@ -3,7 +3,23 @@
 `seslog` is nginx syslog server.
 It collects nginx's access logs and write them to ClickHouse DB.
 
-## Install
+## Make
+```bash
+make
+```
+
+## Run
+```bash
+build/seslog-server -logtostderr=true
+```
+Run `build/seslog-server --help` to see all options
+
+## Install as systemd service
+```bash
+sudo make install
+```
+
+## Install to nginx
 Add new `log_format` to your nginx config (http section)
 ```
 log_format seslog_format '$body_bytes_sent\t$connections_active\t$connections_reading\t$connections_waiting\t$connections_writing\t$content_length\t$http_host\t$http_referer\t$http_user_agent\t$http_x_forwarded_for\t$remote_addr\t$request_method\t$request_time\t$request_uri\t$scheme\t$status\t$tcpinfo_rtt\t$tcpinfo_rttvar\t$time_local\t$upstream_cache_status\t$upstream_response_length\t$upstream_response_time\t$upstream_status\t$uri\t$sent_http_location';
@@ -29,7 +45,7 @@ map $request_uri $sesloggable {
 }
 ```
 
-## Usage
+## SELECT data
 Select TOP-30 Referrer Domains
 ```clickhouse
 SELECT
