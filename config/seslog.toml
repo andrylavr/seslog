@@ -1,0 +1,4 @@
+#Config file example
+CHDSN = "native://127.0.0.1:9001?compress=1&database=seslog&username=logger&password=test&read_timeout=10&write_timeout=10"
+Address = ":5514"
+FlushInterval = "5s"
