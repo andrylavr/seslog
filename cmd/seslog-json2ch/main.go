@@ -3,7 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"pkg/seslog"
+	"log"
+	"github.com/andrylavr/seslog/pkg/seslog"
 )
 
 var (
@@ -13,10 +14,11 @@ var (
 
 var (
 	options seslog.Options
+	configFilename string
 )
 
 func init() {
-	flag.StringVar(&options.CHDSN, "dsn", "native://127.0.0.1:9000?compress=1", "ClickHouse DSN")
+	flag.StringVar(&configFilename, "config", seslog.DEFAULT_CONFIG_LOCATION, "Config file path")
 }
 
 func main() {
@@ -29,6 +31,12 @@ func main() {
 		flag.PrintDefaults()
 	}
 	flag.Parse()
+
+    options, err := seslog.LoadConfig(configFilename)
+    if err != nil {
+        log.Fatal(err)
+        return
+    }
 
 	chWriter := seslog.NewCHWriter(options)
 	chWriter.FromFilesToCH()

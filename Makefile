@@ -1,6 +1,5 @@
 GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD 2>/dev/null)
 GIT_COMMIT=$(shell git rev-parse --short HEAD)
-#GOPATH=${CURDIR}
 LDFLAGS=-ldflags "-s -w -X main.GitBranch=${GIT_BRANCH} -X main.GitCommit=${GIT_COMMIT} -X main.BuildDate=`date -u +%Y-%m-%d.%H:%M:%S`"
 CGO_ENABLED=0
 
@@ -10,8 +9,14 @@ build:
 	@file  build/seslog-server
 	@du -h build/seslog-server
 
+build-tools:
+	@[ -d build ] || mkdir -p build
+	go build ${LDFLAGS} -o build/seslog-json2ch cmd/seslog-json2ch/main.go
+	@file  build/seslog-json2ch
+	@du -h build/seslog-json2ch
+
 br:
-	go build --race -o build/seslog-server -v -ldflags "-s" src/cmd/seslog-server/main.go
+	go build --race -o build/seslog-json2ch -v -ldflags "-s" src/cmd/seslog-json2ch/main.go
 
 d:
 	docker-compose -f dockerfiles/docker-compose.yml rm --force
