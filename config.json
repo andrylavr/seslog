@@ -1,0 +1,6 @@
+{
+  "README": "CHANGE THIS FILE CONTENT IF YOU WANT",
+  "clickhouse-dsn": "native://127.0.0.1:9000?compress=1",
+  "listen-addr": ":5514",
+  "flush-interval": "60s"
+}
